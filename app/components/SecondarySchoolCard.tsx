@@ -1,15 +1,6 @@
 'use client';
 
-interface SecondarySchool {
-  Nombre_Escuela: string;
-  Localidad: string;
-  calle: string;
-  calle_numero: string;
-  Nivel: string;
-  Supervisión: string;
-  telefono: string;
-  'Sección / Equipo DAE'?: string;
-}
+import type { SecondarySchool } from './secondary-school';
 
 interface SecondarySchoolCardProps {
   school: SecondarySchool;

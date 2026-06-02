@@ -2,18 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import SecondarySchoolCard from './SecondarySchoolCard';
+import type { SecondarySchool } from './secondary-school';
 import secondaryOrientadoData from '@/data/SecundariaOrientado.json';
 import secondaryTecnicoData from '@/data/SecuntadariaTecnico.json';
-
-interface SecondarySchool {
-  Nombre_Escuela: string;
-  Localidad: string;
-  calle: string;
-  calle_numero: string;
-  Nivel: string;
-  Departamento: string;
-  'Sección / Equipo DAE'?: string;
-}
 
 interface SecondarySchoolsListProps {
   selectedDepartment: string | null;
