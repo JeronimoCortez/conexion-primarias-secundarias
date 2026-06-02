@@ -1,5 +1,6 @@
 export interface SecondarySchool {
   Nombre_Escuela: string;
+  'Número_escuela': string;
   Localidad: string;
   calle: string;
   calle_numero: string;

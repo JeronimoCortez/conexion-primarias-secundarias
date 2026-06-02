@@ -25,6 +25,10 @@ export default function SecondarySchoolCard({
 
         <div className="flex flex-col gap-2 text-sm text-gray-700">
           <div>
+            <span className="font-medium">Nro. escuela:</span>{' '}
+            <span>{school['Número_escuela']}</span>
+          </div>
+          <div>
             <span className="font-medium">Localidad:</span>{' '}
             <span>{school.Localidad}</span>
           </div>
