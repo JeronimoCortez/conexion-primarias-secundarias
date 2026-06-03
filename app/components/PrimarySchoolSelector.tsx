@@ -5,6 +5,7 @@ import primaryData from '@/data/primaria.json';
 
 interface School {
   Nombre_Escuela: string;
+  'Número_escuela': string;
   Escuela_ID: string;
   Departamento: string;
   Localidad: string;
@@ -71,7 +72,7 @@ export default function PrimarySchoolSelector({
         </option>
         {schools.map((school) => (
           <option key={school.Escuela_ID} value={school.Escuela_ID}>
-            {school.Nombre_Escuela}
+            {school.Nombre_Escuela} - {school['Número_escuela']}
           </option>
         ))}
       </select>
