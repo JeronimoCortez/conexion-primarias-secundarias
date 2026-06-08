@@ -9,7 +9,7 @@ export default function SchoolSelector() {
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(
     null
   );
-  const [selectedPrimarySchool, setSelectedPrimarySchool] = useState<
+  const [selectedPrimarySchoolNumber, setSelectedPrimarySchoolNumber] = useState<
     string | null
   >(null);
   const [selectedPrimarySchoolName, setSelectedPrimarySchoolName] = useState<
@@ -21,17 +21,17 @@ export default function SchoolSelector() {
   const handleDepartmentChange = (department: string) => {
     setSelectedDepartment(department);
     // Clear dependent selections
-    setSelectedPrimarySchool(null);
+    setSelectedPrimarySchoolNumber(null);
     setSelectedPrimarySchoolName(null);
     setSelectedPrimarySchoolLocalidad(null);
   };
 
   const handlePrimarySchoolChange = (
-    schoolId: string,
+    schoolNumber: string,
     schoolName: string,
     localidad: string
   ) => {
-    setSelectedPrimarySchool(schoolId);
+    setSelectedPrimarySchoolNumber(schoolNumber);
     setSelectedPrimarySchoolName(schoolName);
     setSelectedPrimarySchoolLocalidad(localidad);
   };
@@ -48,7 +48,7 @@ export default function SchoolSelector() {
         <PrimarySchoolSelector
           selectedDepartment={selectedDepartment}
           onSelectSchool={handlePrimarySchoolChange}
-          selectedSchool={selectedPrimarySchool}
+          selectedSchool={selectedPrimarySchoolNumber}
         />
       </div>
 
@@ -56,6 +56,7 @@ export default function SchoolSelector() {
       <div>
         <SecondarySchoolsList
           selectedDepartment={selectedDepartment}
+          selectedPrimarySchoolNumber={selectedPrimarySchoolNumber}
           selectedPrimarySchoolName={selectedPrimarySchoolName}
           selectedPrimarySchoolLocalidad={selectedPrimarySchoolLocalidad}
         />

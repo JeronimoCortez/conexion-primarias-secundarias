@@ -1,12 +1,13 @@
-export interface SecondarySchool {
+import type { SchoolNumberRecord } from './school-data';
+
+export interface SecondarySchool extends SchoolNumberRecord {
   Nombre_Escuela: string;
-  'Número_escuela': string;
   Localidad: string;
   calle: string;
   calle_numero: string;
   Nivel: string;
   Departamento: string;
-  Supervisión: string;
+  Supervisi\u00f3n: string;
   telefono: string;
-  'Sección / Equipo DAE'?: string;
+  'Secci\u00f3n / Equipo DAE'?: string;
 }

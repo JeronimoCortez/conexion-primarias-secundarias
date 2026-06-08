@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import primaryData from '@/data/primaria.json';
+import type { PrimarySchoolRecord } from './school-data';
 
 interface DepartmentSelectorProps {
   onSelectDepartment: (department: string) => void;
@@ -18,8 +19,10 @@ export default function DepartmentSelector({
   useEffect(() => {
     // Extract unique departments from primary schools data
     const uniqueDepartments = Array.from(
-      new Set(primaryData.map((school: any) => school.Departamento))
-    ).sort();
+      new Set((primaryData as PrimarySchoolRecord[]).map((school) => school.Departamento))
+    )
+      .filter(Boolean)
+      .sort();
 
     setDepartments(uniqueDepartments);
     setIsLoading(false);

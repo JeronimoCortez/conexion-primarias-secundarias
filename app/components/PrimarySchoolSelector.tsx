@@ -2,18 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import primaryData from '@/data/primaria.json';
-
-interface School {
-  Nombre_Escuela: string;
-  'Número_escuela': string;
-  Escuela_ID: string;
-  Departamento: string;
-  Localidad: string;
-}
+import {
+  getSchoolNumber,
+  normalizeSchoolNumber,
+  type PrimarySchoolRecord,
+} from './school-data';
 
 interface PrimarySchoolSelectorProps {
   selectedDepartment: string | null;
-  onSelectSchool: (schoolId: string, schoolName: string, localidad: string) => void;
+  onSelectSchool: (
+    schoolNumber: string,
+    schoolName: string,
+    localidad: string
+  ) => void;
   selectedSchool: string | null;
 }
 
@@ -22,7 +23,7 @@ export default function PrimarySchoolSelector({
   onSelectSchool,
   selectedSchool,
 }: PrimarySchoolSelectorProps) {
-  const [schools, setSchools] = useState<School[]>([]);
+  const [schools, setSchools] = useState<PrimarySchoolRecord[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -33,9 +34,13 @@ export default function PrimarySchoolSelector({
 
     setIsLoading(true);
 
-    // Filter primary schools by selected department
-    const filteredSchools = (primaryData as School[])
-      .filter((school) => school.Departamento === selectedDepartment)
+    const filteredSchools = (primaryData as PrimarySchoolRecord[])
+      .filter(
+        (school) =>
+          school.Departamento === selectedDepartment &&
+          school.Nombre_Escuela &&
+          getSchoolNumber(school)
+      )
       .sort((a, b) => a.Nombre_Escuela.localeCompare(b.Nombre_Escuela));
 
     setSchools(filteredSchools);
@@ -54,10 +59,17 @@ export default function PrimarySchoolSelector({
         id="primary-school-select"
         value={selectedSchool || ''}
         onChange={(e) => {
-          const schoolId = e.target.value;
-          const school = schools.find((s) => s.Escuela_ID === schoolId);
+          const schoolNumber = e.target.value;
+          const school = schools.find(
+            (item) =>
+              normalizeSchoolNumber(getSchoolNumber(item)) === schoolNumber
+          );
           if (school) {
-            onSelectSchool(schoolId, school.Nombre_Escuela, school.Localidad);
+            onSelectSchool(
+              schoolNumber,
+              school.Nombre_Escuela,
+              school.Localidad
+            );
           }
         }}
         disabled={!selectedDepartment || isLoading}
@@ -70,11 +82,15 @@ export default function PrimarySchoolSelector({
               ? 'Cargando escuelas...'
               : 'Selecciona una escuela primaria'}
         </option>
-        {schools.map((school) => (
-          <option key={school.Escuela_ID} value={school.Escuela_ID}>
-            {school.Nombre_Escuela} - {school['Número_escuela']}
-          </option>
-        ))}
+        {schools.map((school) => {
+          const schoolNumber = normalizeSchoolNumber(getSchoolNumber(school));
+
+          return (
+            <option key={schoolNumber} value={schoolNumber}>
+              {school.Nombre_Escuela} - {getSchoolNumber(school)}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
